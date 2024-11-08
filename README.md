@@ -7,18 +7,21 @@
 
 ## Folder
 '''
+'''
 ├── project.toml
 ├── apple.jpg
 ├── src/
 │   ├── main.py
 └── README.md
+
 '''
 
 ## Environment
-- poetry
+- Poetry를 사용하여 가상환경을 관리하고 필요한 패키지를 설치합니다
 
 ## Code 
-0. poetry가 설치되어있지 않은 경우 다음 명령어로 poetry 설치
+0. Poetry가 설치되어있지 않은 경우 다음 명령어로 poetry 설치
+   
 '''
 Linux, macOS - curl -sSL https://install.python-poetry.org | python3 -
 Windows - (Invoke-WebRequest -Uri https://install.python-poetry.org -UseBasicParsing).Content | python -
