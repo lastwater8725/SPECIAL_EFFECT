@@ -21,19 +21,16 @@
 
 ## Code 
 0. Poetry가 설치되어있지 않은 경우 다음 명령어로 poetry 설치
-   
 ```
 Linux, macOS - curl -sSL https://install.python-poetry.org | python3 -
 Windows - (Invoke-WebRequest -Uri https://install.python-poetry.org -UseBasicParsing).Content | python -
 ```
 ⬇️ e.g.
 ```
-
 (Invoke-WebRequest -Uri https://install.python-poetry.org -UseBasicParsing).Content | python -
 ```
 1. 가상환경이 없는 경우 다음 명령어로 가상환경 생성
 ```
-
 poetry new <가상환경 이름>
 ```
 2. 가상환경 활성화 및 필요한 라이브러리 설치
@@ -43,7 +40,7 @@ poetry install
 ```
 (오류가 발생한다면 필요한 라이브러리 직접 설치)
 ```
-라이브러리 설치 명려어
+라이브러리 설치 명령어
 ```
 poetry add <라이브러리 이름>
 ```
