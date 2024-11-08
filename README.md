@@ -40,6 +40,8 @@ poetry install
 ```
 (오류가 발생한다면 필요한 라이브러리 직접 설치)
 ```
+ERROR: Ignored the following versions that require a different python version: 0.28.0 Requires-Python >=3.7, <3.11; 1.21.2 Requires-Python >=3.7,<3.11; 1.21.3 Requires-Python >=3.7,<3.11; 1.21.4 Requires-Python >=3.7,<3.11; 1.21.5 Requires-Python >=3.7,<3.11; 1.21.6 Requires-Python >=3.7,<3.11
+```
 라이브러리 설치 명령어
 ```
 poetry add <라이브러리 이름>
