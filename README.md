@@ -50,7 +50,6 @@ AttributeError: module 'cv2' has no attribute 'xphoto'
 --> poetry add opencv-contrib-python
 ```
 
-
 3. 코드 실행 
 ```
 python src/main.py
