@@ -1,0 +1,7 @@
+# gitignore입니다
+src/build/
+src/dist/
+special_effect/
+dist/
+src/*.spec
+*.lock
