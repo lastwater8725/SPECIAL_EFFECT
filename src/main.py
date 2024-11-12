@@ -2,11 +2,7 @@ import cv2 as cv
 import numpy as np
 from PyQt6.QtWidgets import *
 import sys
-
-import cv2 as cv
-import numpy as np
-from PyQt6.QtWidgets import *
-import sys
+import os
 
 class SpecialEffect(QMainWindow):
     def __init__(self):
@@ -78,30 +74,33 @@ class SpecialEffect(QMainWindow):
 
     def pictureOpenFunction(self):
         self.label.setText('이미지를 선택해주세요.')
-        fname = QFileDialog.getOpenFileName(self, '사진 읽기', './')
+
+        fname, _ = QFileDialog.getOpenFileName(self, '사진 읽기', '', 'Image Files (*.png *.jpg *.bmp *.tiff *.jpeg)')
         
-        if fname[0]:
-            self.img = cv.imread(fname[0])
+        if fname:
+            if os.path.isfile(fname):
+                self.img = cv.imread(fname)
 
-            if self.img is None: 
-                QMessageBox.warning(self, '파일을 읽을 수 없습니다')
-
-            # 버튼 활성화
-            self.embossButton.setEnabled(True)
-            self.cartoonButton.setEnabled(True)
-            self.sketchButton.setEnabled(True)
-            self.oilButton.setEnabled(True)
-            self.warpAffineButton.setEnabled(True)
-            self.saveButton.setEnabled(True)
-            self.flippedButton.setEnabled(True)
-            self.brightenedButton.setEnabled(True)
-            self.gaussian_noiseButton.setEnabled(True)
-            self.cvtcolorButton.setEnabled(True)
-            cv.imshow('Painting', self.img)
+                if self.img is None: 
+                    QMessageBox.warning(self, '파일을 읽을 수 없습니다')
+                else:
+                    # 버튼 활성화
+                    self.embossButton.setEnabled(True)
+                    self.cartoonButton.setEnabled(True)
+                    self.sketchButton.setEnabled(True)
+                    self.oilButton.setEnabled(True)
+                    self.warpAffineButton.setEnabled(True)
+                    self.saveButton.setEnabled(True)
+                    self.flippedButton.setEnabled(True)
+                    self.brightenedButton.setEnabled(True)
+                    self.gaussian_noiseButton.setEnabled(True)
+                    self.cvtcolorButton.setEnabled(True)
+                    cv.imshow('Painting', self.img)
+            else:
+                QMessageBox.warning(self, '잘못된 파일', '선택한 파일이 존재하지 않거나 잘못된 파일입니다.')
         else:
             QMessageBox.warning(self, '파일을 선택해주세요')
 
-    
     def embossFunction(self):
         femboss=np.array([[-1.0, 0.0, 0.0],[0.0, 0.0, 0.0], [0.0, 0.0, 1.0]])
 
@@ -161,42 +160,16 @@ class SpecialEffect(QMainWindow):
         if fname:
             if not any(fname.endswith(ext) for ext in ['.png', '.jpg', '.bmp']):
                 fname += '.png'
-
-            i = self.pickCombo.currentIndex()
-            
-            if i == 0 and hasattr(self, 'emboss') and self.emboss is not None:
-                cv.imwrite(fname, self.emboss)
-            elif i == 1 and hasattr(self, 'cartoon') and self.cartoon is not None:
-                cv.imwrite(fname, self.cartoon)
-            elif i == 2 and hasattr(self, 'sketch_gray') and self.sketch_gray is not None:
-                cv.imwrite(fname, self.sketch_gray)
-            elif i == 3 and hasattr(self, 'sketch_color') and self.sketch_color is not None:
-                cv.imwrite(fname, self.sketch_color)
-            elif i == 4 and hasattr(self, 'oil') and self.oil is not None:
-                cv.imwrite(fname, self.oil)
-            elif i == 5 and hasattr(self, 'rotate_image') and self.rotate_image is not None:
-                cv.imwrite(fname, self.rotate_image)
-            elif i == 6 and hasattr(self, 'flip_image') and self.flipped_image is not None:
-                cv.imwrite(fname, self.flipped_image)
-            elif i == 7 and hasattr(self, 'brightned_image') and self.brightned_image is not None:
-                cv.imwrite(fname, self.brightned_image)
-            elif i == 8 and hasattr(self, 'noise_image') and self.noise_image is not None:
-                cv.imwrite(fname, self.noise_image)
-            elif i == 8 and hasattr(self, 'cvt_image') and self.cvt_image is not None:
-                cv.imwrite(fname, self.cvt_image)    
-            else:
-                QMessageBox.warning(self, "오류", "저장할 이미지가 생성되지않았습니다.")
+            cv.imwrite(fname, self.img)
+            QMessageBox.information(self, '저장 성공', f'{fname}에 이미지가 저장되었습니다.')
         else:
-            QMessageBox.warning(self, "오류", "저장할 파일 경로를 선택하지 않았습니다.")
-
+            QMessageBox.warning(self, '저장 실패', '파일 경로를 선택해주세요')
 
     def quitFunction(self):
-        cv.destroyAllWindows()
         self.close()
 
-app = QApplication(sys.argv)
-win = SpecialEffect()
-win.show()
-app.exec()
-
-    
+if __name__ == '__main__':
+    app = QApplication(sys.argv)
+    window = SpecialEffect()
+    window.show()
+    sys.exit(app.exec())
